@@ -38,9 +38,9 @@ Pitlord will provide polyglot architecture and ownership enforcement. Its intend
 
 Cantrip will provide portable, versioned, and testable skills for agents and automation. Skills should be small, reusable capabilities that can travel with a repository or be distributed independently without depending on one agent, model, account, or provider.
 
-### Homunculus
+### [Homunculus](docs/HOMUNCULUS.md)
 
-Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports.
+Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports. ArcanaGraph may provide relationship-aware target selection and before-and-after structural verification for more plausible logical defects.
 
 ### Ritual
 

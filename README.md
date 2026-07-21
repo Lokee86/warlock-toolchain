@@ -12,6 +12,9 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | [ArcanaGraph](https://github.com/Lokee86/arcana-graph) | Language-independent repository relationship graph | In development |
 | **Grimoire Context** | Repository context discovery, selection, packaging, and delivery | Planned |
 | **Pitlord** | Polyglot architecture, dependency, and ownership enforcement | Planned |
+| **Cantrip** | Portable, versioned, and testable skills for agents and automation | Planned |
+| **Homunculus** | Schema-driven functional repository specimens and deterministic defect injection | Planned |
+| **Ritual** | Deterministic execution protocols for agent-assisted work | Planned |
 
 Each component remains independently useful. Together, they are intended to share repository facts, identities, relationships, and policy so humans and software agents can work from the same durable understanding of a codebase.
 
@@ -37,6 +40,15 @@ Grimoire Context
            ↓
 Pitlord
     enforces architectural boundaries
+
+Cantrip
+    supplies reusable skills
+           ↓
+Ritual
+    makes agent execution bounded and repeatable
+
+Homunculus
+    creates controlled repository specimens for testing the toolchain
 ```
 
 This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md) for current status.
@@ -53,7 +65,7 @@ This is the intended integration direction, not a claim that every component or 
 
 ## Current status
 
-[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [ArcanaGraph](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire Context and Pitlord currently describe planned product boundaries.
+[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [ArcanaGraph](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire Context, Pitlord, Cantrip, Homunculus, and Ritual currently describe planned product boundaries.
 
 Warlock itself is initially a documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. Implementation remains in the component repositories.
 

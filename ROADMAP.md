@@ -34,6 +34,18 @@ Grimoire Context will select, assemble, and deliver repository context for human
 
 Pitlord will provide polyglot architecture and ownership enforcement. Its intended role is to evaluate repository policy against normalized paths, dependencies, symbols, and relationships rather than embedding every rule in language-specific scripts.
 
+### Cantrip
+
+Cantrip will provide portable, versioned, and testable skills for agents and automation. Skills should be small, reusable capabilities that can travel with a repository or be distributed independently without depending on one agent, model, account, or provider.
+
+### Homunculus
+
+Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports.
+
+### Ritual
+
+Ritual will define deterministic execution protocols for agent-assisted work. It is not an agent orchestrator. Where Cantrip describes reusable skills, Ritual will describe the larger bounded procedure: ordered phases, permitted scope, required checkpoints, expected artifacts, verification, failure handling, and completion conditions. Its purpose is to reduce behavioral variance and make agent-driven workflows more repeatable, inspectable, and testable.
+
 ## Shared integration direction
 
 The toolchain is expected to converge on shared concepts where doing so creates real value:

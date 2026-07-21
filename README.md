@@ -67,4 +67,4 @@ Changes to a component belong in that component's repository. This repository ac
 
 ## License
 
-Warlock Toolchain documentation and other material in this repository are available under the [MIT License](LICENSE.md). Each component repository is licensed independently.
+Warlock Toolchain documentation and other material in this repository are available under the [Apache License 2.0](LICENSE). Each component repository is licensed independently.

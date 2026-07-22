@@ -26,9 +26,11 @@ Likely next work includes repository extraction adapters, normalized nodes and e
 
 ## Planned
 
-### Grimoire Context
+### [Grimoire Context](docs/GRIMOIRE.md)
 
-Grimoire Context will select, assemble, and deliver repository context for humans, agents, and automation. Its intended role is to turn repository facts, documentation, current work, and dependency relationships into bounded, relevant context packages.
+Grimoire Context will be a lightweight local context compiler built around continuously maintained repository indexes. Its standalone core will combine lexical, structural, metadata, and optional onboard embedding retrieval, then apply simple inspectable ranking and model-aware token budgeting to emit bounded context packages.
+
+ArcanaGraph and Demon Docs will be optional evidence providers rather than foundational dependencies. Grimoire should remain agent-independent, avoid generative models and heavy RAG infrastructure, and keep interactive context compilation within strict latency bounds by moving parsing, chunking, and repository embedding work to incremental index maintenance.
 
 ### Pitlord
 
@@ -42,15 +44,29 @@ Cantrip will provide portable, versioned, and testable skills for agents and aut
 
 Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports. ArcanaGraph may provide relationship-aware target selection and before-and-after structural verification for more plausible logical defects.
 
+### [Incubus](docs/INCUBUS.md)
+
+Incubus will provide deterministic runtime-adversity testing for live systems. It will coordinate declared network, process, dependency, resource, timing, storage, and event-stream disruptions, capture the resulting evidence, and evaluate explicit recovery or convergence assertions.
+
+Space Rocks will be the first concrete target. Initial work should focus on repeatable multiplayer and distributed-service failure scenarios rather than attempting to create a universal chaos platform. Incubus complements Homunculus: Homunculus creates or mutates controlled repository specimens, while Incubus subjects running systems to controlled hostile conditions.
+
 ### Ritual
 
 Ritual will define deterministic execution protocols for agent-assisted work. It is not an agent orchestrator. Where Cantrip describes reusable skills, Ritual will describe the larger bounded procedure: ordered phases, permitted scope, required checkpoints, expected artifacts, verification, failure handling, and completion conditions. Its purpose is to reduce behavioral variance and make agent-driven workflows more repeatable, inspectable, and testable.
+
+### [Warlock Runtime](docs/WARLOCK_RUNTIME.md)
+
+Warlock itself will become the shared runtime and supervisor for the toolchain's daemon swarm. The planned runtime will coordinate component discovery, process lifecycle, shared repository watching, normalized change events, health, diagnostics, and local IPC while preserving standalone operation and domain ownership in every component.
+
+Runtime contracts should begin with concrete duplication already present across multiple tools. Warlock should coordinate focused services rather than collapse them into a monolith.
 
 ## Shared integration direction
 
 The toolchain is expected to converge on shared concepts where doing so creates real value:
 
 - repository discovery and ignore behavior;
+- shared repository watching and normalized change events;
+- daemon discovery, supervision, health, and local IPC;
 - stable file and document identity;
 - normalized paths, symbols, dependencies, and relationships;
 - incremental fingerprints and cache identities;
@@ -59,4 +75,4 @@ The toolchain is expected to converge on shared concepts where doing so creates 
 - portable configuration conventions; and
 - versioned interfaces between independently useful tools.
 
-Shared infrastructure should be extracted only after component needs make the boundary concrete. Warlock should remain a toolchain of focused products rather than becoming a monolithic application.
+Shared infrastructure should be extracted only after component needs make the boundary concrete. Warlock's runtime should remove duplicated operational work while the toolchain remains a collection of focused, independently useful products rather than a monolithic application.

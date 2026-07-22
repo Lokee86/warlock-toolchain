@@ -10,13 +10,14 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | --- | --- | --- |
 | [Demon Docs](https://github.com/Lokee86/demon-docs) | Documentation integrity, schemas, links, indexes, codemaps, and maintenance | Available |
 | [ArcanaGraph](https://github.com/Lokee86/arcana-graph) | Language-independent repository relationship graph | In development |
-| **Grimoire Context** | Repository context discovery, selection, packaging, and delivery | Planned |
+| [**Grimoire Context**](docs/GRIMOIRE.md) | Lightweight indexed retrieval and token-bounded repository context compilation | Planned |
 | **Pitlord** | Polyglot architecture, dependency, and ownership enforcement | Planned |
 | **Cantrip** | Portable, versioned, and testable skills for agents and automation | Planned |
 | **Homunculus** | Schema-driven functional repository specimens and deterministic defect injection | Planned |
+| [**Incubus**](docs/INCUBUS.md) | Deterministic runtime adversity, disruption, and recovery testing | Planned |
 | **Ritual** | Deterministic execution protocols for agent-assisted work | Planned |
 
-Each component remains independently useful. Together, they are intended to share repository facts, identities, relationships, and policy so humans and software agents can work from the same durable understanding of a codebase.
+Each component remains independently useful. Together, they are intended to share repository facts, identities, relationships, and policy so humans and software agents can work from the same durable understanding of a codebase. [Warlock itself](docs/WARLOCK_RUNTIME.md) is also intended to become the shared runtime and supervisor for the toolchain's daemon swarm.
 
 ## Why Warlock exists
 
@@ -29,17 +30,13 @@ Warlock moves that knowledge into repository-owned systems that can be inspected
 ## Toolchain vision
 
 ```text
-Demon Docs
-    preserves documented knowledge
-           ↓
-ArcanaGraph
-    maps repository relationships
-           ↓
-Grimoire Context
-    assembles relevant working context
-           ↓
-Pitlord
-    enforces architectural boundaries
+Warlock runtime
+    discovers, supervises, and feeds the daemon swarm
+    │
+    ├── Demon Docs preserves documented knowledge
+    ├── ArcanaGraph maps repository relationships
+    ├── Grimoire compiles fast, bounded working context
+    └── Pitlord enforces architectural boundaries
 
 Cantrip
     supplies reusable skills
@@ -49,25 +46,30 @@ Ritual
 
 Homunculus
     creates controlled repository specimens for testing the toolchain
+
+Incubus
+    applies reproducible adversity to running systems
 ```
 
-This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md) for current status.
+Grimoire's base retrieval engine does not require ArcanaGraph or Demon Docs; both are optional evidence providers. Every component remains independently runnable, while the planned Warlock runtime will provide shared watching, lifecycle, events, and IPC when multiple daemons are installed.
+
+This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md), [Grimoire design](docs/GRIMOIRE.md), [Incubus design](docs/INCUBUS.md), and [runtime design](docs/WARLOCK_RUNTIME.md) for current status.
 
 ## Principles
 
-- **Deterministic first.** Core behavior should be reproducible, inspectable, and testable without an LLM.
+- **Deterministic first.** Core behavior should be stable, inspectable, and testable without a generative LLM; exact reproducibility may be traded at the margins for practical latency.
 - **Useful to humans and agents.** Repository health is not an agent-only concern.
 - **Repository-owned knowledge.** Important context and constraints should travel with the project.
-- **Model-independent.** No component should depend on one account, conversation, model, or provider.
+- **Agent and provider independent.** No component should depend on one account, conversation, generative model, agent, or hosted provider.
 - **Explicit ownership.** Tools should mutate only declared surfaces and enforce clearly defined boundaries.
 - **Polyglot where practical.** Shared facts and policies should cross language and framework boundaries.
 - **Composable, not monolithic.** Each tool should stand alone while supporting deeper integration with the others.
 
 ## Current status
 
-[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [ArcanaGraph](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire Context, Pitlord, Cantrip, Homunculus, and Ritual currently describe planned product boundaries.
+[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [ArcanaGraph](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire Context, Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
 
-Warlock itself is initially a documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. Implementation remains in the component repositories.
+Warlock itself currently serves as the documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. It is also planned to become the shared daemon runtime and supervisor, while domain implementation remains in the independently useful component repositories.
 
 ## Origins
 

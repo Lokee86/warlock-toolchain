@@ -186,7 +186,9 @@ Grimoire is not intended to become:
 
 The first implementation slice now exists in the standalone `grimoire` project directory. It provides:
 
-- an incremental local JSON index with unchanged-file reuse;
+- an incremental private go-git object repository with unchanged-file reuse;
+- deterministic binary file records distributed across 256 content-addressed shards;
+- atomic snapshot publication through `refs/grimoire/state`;
 - a deterministic fallback chunker for supported text files;
 - lexical, filename, path, and leading-line ranking signals;
 - whole-chunk fitting under a conservative content-token budget;

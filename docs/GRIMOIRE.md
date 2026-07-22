@@ -189,6 +189,8 @@ The first implementation slice now exists in the standalone `grimoire` project d
 - an incremental private go-git object repository with unchanged-file reuse;
 - deterministic binary file records distributed across 256 content-addressed shards;
 - atomic snapshot publication through `refs/grimoire/state`;
+- standard root and nested `.gitignore` traversal, with an optional replacement ignore file;
+- permanent exclusion of Git metadata, tool-state directories, worktree containers, and the configured Grimoire state path;
 - a deterministic fallback chunker for supported text files;
 - lexical, filename, path, and leading-line ranking signals;
 - whole-chunk fitting under a conservative content-token budget;

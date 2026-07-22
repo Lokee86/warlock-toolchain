@@ -11,7 +11,7 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | [Demon Docs](https://github.com/Lokee86/demon-docs) | Documentation integrity, schemas, links, indexes, codemaps, and maintenance | Available |
 | [**Lexicon**](https://github.com/Lokee86/lexicon) | Shared polyglot language adapters and normalized source facts | In development |
 | [Arcana](https://github.com/Lokee86/arcana-graph) | Language-independent repository relationship graph | In development |
-| [**Grimoire**](docs/GRIMOIRE.md) | Lightweight indexed retrieval and token-bounded repository context compilation | In development |
+| [Grimoire](https://github.com/Lokee86/grimoire) | Lightweight indexed retrieval and token-bounded repository context compilation | In development |
 | **Pitlord** | Polyglot architecture, dependency, and ownership enforcement | Planned |
 | **Cantrip** | Portable, versioned, and testable skills for agents and automation | Planned |
 | **Homunculus** | Schema-driven functional repository specimens and deterministic defect injection | Planned |
@@ -69,7 +69,7 @@ This is the intended integration direction, not a claim that every component or 
 
 ## Current status
 
-[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire is now also in development with an incremental lexical index, deterministic ranking, bounded whole-chunk selection, and inspectable context packages. [Lexicon](https://github.com/Lokee86/lexicon) is now in development as the shared owner of language adapters and normalized source facts. Ruby, Python, GDScript, Rust, and TypeScript adapters are beginning in parallel while the existing Go adapter remains temporarily in Arcana. Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
+[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. [Grimoire](https://github.com/Lokee86/grimoire) is now also in development with an incremental lexical index, deterministic ranking, bounded whole-chunk selection, and inspectable context packages. [Lexicon](https://github.com/Lokee86/lexicon) is now in development as the shared owner of language adapters and normalized source facts. Ruby, Python, GDScript, Rust, and TypeScript adapters are beginning in parallel while the existing Go adapter remains temporarily in Arcana. Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
 
 Warlock itself currently serves as the documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. It is also planned to become the shared daemon runtime and supervisor, while domain implementation remains in the independently useful component repositories.
 

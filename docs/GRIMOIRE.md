@@ -198,17 +198,21 @@ The first implementation slice now exists in the standalone `grimoire` project d
 - a CLI path that reads only prepared index state during context requests; and
 - tests plus a warm retrieval benchmark over 10,000 prepared chunks.
 
-This is deliberately the lexical baseline. Language-aware chunking, model-specific tokenizers, semantic retrieval, Arcana evidence, Demon Docs evidence, daemon maintenance, and Warlock hosting remain later work.
+This is deliberately the lexical baseline. The current request path avoids repository traversal and source-file reads, but still performs a linear in-memory scan of prepared chunks. Its budget uses a deterministic byte-length heuristic rather than a model tokenizer.
+
+Language-aware chunking will consume structural source ranges from Lexicon while retaining the fallback chunker when Lexicon is unavailable, has no adapter, or cannot parse a file. That structural-chunk integration is partially blocked on Lexicon's normalized output and invocation contract. Prepared lexical postings, model-specific tokenizers, semantic retrieval, Arcana evidence, Demon Docs evidence, daemon maintenance, and Warlock hosting remain later work.
 
 ## Implementation direction
 
 Grimoire is implemented in Go because the product requires fast startup, simple distribution, predictable concurrency, and close operational compatibility with the rest of the toolchain. The product boundary remains language-independent.
 
-The first useful version should remain narrow:
+The implementation sequence should remain narrow:
 
-1. Maintain a local incremental chunk index.
-2. Provide lexical retrieval and simple deterministic ranking.
-3. Fit selected chunks into a model-aware token budget.
-4. Emit inspectable context packages.
-5. Add a small onboard embedding model once the lexical baseline and latency benchmarks can measure its value and cost.
-6. Add Demon Docs and Arcana as optional evidence providers through stable interfaces.
+1. Preserve the current local incremental fallback-chunk index and inspectable context packages.
+2. Consume Lexicon structural ranges behind an explicit fallback-capable boundary.
+3. Replace linear prepared-chunk search with incremental lexical postings and an established scorer such as BM25.
+4. Add model-aware token counting through existing tokenizer libraries.
+5. Improve selection quality only after chunks, retrieval, and token costs can be measured.
+6. Add standalone incremental maintenance and optional Warlock runtime hosting.
+7. Evaluate a small onboard embedding model once the lexical baseline and latency benchmarks can measure its value and cost.
+8. Add Demon Docs and Arcana as optional evidence providers through stable interfaces.

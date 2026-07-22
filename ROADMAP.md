@@ -38,6 +38,12 @@ The standalone repository now owns the neutral facts-v1 contract. Initial Ruby, 
 
 Lexicon is an explicit shared dependency for tools that require language understanding. Tool independence means the tools remain separate usable products; it does not require duplicating language-analysis work in every repository.
 
+### [Homunculus](docs/HOMUNCULUS.md)
+
+Homunculus now has its first standalone implementation slice: deterministic Go and Python `layered-service` specimens, content-hashed manifests, one build-preserving `api-bypasses-service` mutation, expected relationship and Pitlord diagnostic ground truth, and language-level invariant verification.
+
+Next work should validate the generated specimens through Lexicon and Arcana, then use them to drive Pitlord's first direct architecture-boundary rule before broadening the profile or mutation vocabulary.
+
 ## Planned
 
 ### Pitlord
@@ -47,10 +53,6 @@ Pitlord will provide polyglot architecture and ownership enforcement. It will co
 ### Cantrip
 
 Cantrip will provide portable, versioned, and testable skills for agents and automation. Skills should be small, reusable capabilities that can travel with a repository or be distributed independently without depending on one agent, model, account, or provider.
-
-### [Homunculus](docs/HOMUNCULUS.md)
-
-Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports. Arcana may provide relationship-aware target selection and before-and-after structural verification for more plausible logical defects.
 
 ### [Incubus](docs/INCUBUS.md)
 

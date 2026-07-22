@@ -1,6 +1,6 @@
 # Homunculus
 
-**Status:** Planned concept
+**Status:** In development
 
 Homunculus is a deterministic repository specimen builder and defect-injection tool. It creates or modifies functional, or functionally representative, repositories according to explicit scenario definitions so repository tooling can be tested against known structures, defects, and expected outcomes.
 
@@ -196,18 +196,44 @@ Each run should emit a machine-readable manifest containing at least:
 
 The generated repository and manifest together form the specimen.
 
+## Current implementation baseline
+
+The first standalone implementation slice now exists in the `homunculus` project directory. It provides:
+
+- a built-in `layered-service` profile;
+- equivalent functional Go and Python specimens;
+- deterministic source bytes and content-hashed manifests;
+- explicit `api`, `service`, and `storage` architecture ground truth;
+- a build-preserving `api-bypasses-service` mutation;
+- expected normalized import and call relationships;
+- an expected future Pitlord diagnostic;
+- tracked-source and content-integrity verification;
+- `go test ./...` verification for Go specimens;
+- Python syntax plus functional-call verification; and
+- automatic rollback when a mutation fails its declared invariants.
+
+Current commands are:
+
+```text
+homunculus build --language go|python --output PATH
+homunculus mutate --specimen PATH --mutation api-bypasses-service
+homunculus verify --specimen PATH
+```
+
+This slice deliberately uses maintained renderers and a built-in profile rather than introducing a general scenario language before the specimen and mutation contracts have been exercised by Lexicon, Arcana, and Pitlord.
+
 ## Initial scope
 
-A useful first prototype should remain narrow:
+The next implementation scope should remain narrow:
 
-1. Start from one maintained, functional repository template.
-2. Support a small declarative scenario format.
-3. Implement several deterministic file- and relationship-level defects.
-4. Emit a complete mutation manifest.
-5. Verify build or test expectations.
-6. Add Arcana-backed target selection once its graph contracts are stable enough.
+1. Run the generated clean and mutated specimens through Lexicon's Go and Python adapters.
+2. Record and compare the actual normalized facts against the manifest ground truth.
+3. Sync both states into Arcana and verify the expected graph delta.
+4. Use the same specimens to drive Pitlord's first direct architecture-boundary rule.
+5. Add a small versioned scenario file only after the built-in profile proves the required fields.
+6. Add a second mutation pattern before generalizing target selection.
 
-The first milestone should prove that Homunculus can create the same functional specimen with the same known defects repeatedly. Broad language support and arbitrary repository mutation can come later.
+Broad language support, arbitrary repository mutation, and Arcana-backed target selection can come later.
 
 ## Non-goals
 

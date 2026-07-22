@@ -4,7 +4,9 @@ Warlock is an umbrella project. Most implementation work belongs in the reposito
 
 - [Demon Docs](https://github.com/Lokee86/demon-docs)
 - [Arcana](https://github.com/Lokee86/arcana-graph)
-- Grimoire, once its repository exists
+- [Lexicon](https://github.com/Lokee86/lexicon)
+- [Grimoire](https://github.com/Lokee86/grimoire)
+- Homunculus, once its repository is published
 - Pitlord, once its repository exists
 
 This repository owns the shared project description, terminology, toolchain boundaries, integration direction, and roadmap.

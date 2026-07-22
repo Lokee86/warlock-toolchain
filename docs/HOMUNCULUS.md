@@ -2,190 +2,159 @@
 
 **Status:** In development
 
-Homunculus creates controlled architecture defects in real repositories so architecture-analysis tools can be tested against known ground truth.
+Homunculus introduces controlled architecture defects into real repositories so architecture-analysis and enforcement tools can be tested against known ground truth.
 
-Its current scope is intentionally narrow: add one direct dependency between two architectural areas while keeping the original checkout untouched and proving that the mutated checkout still passes its required verification.
+Its primary requirement is unusual:
 
-## Current purpose
+> Damage the internal architecture while keeping the program observably functional under its verification suite.
 
-Homunculus answers a specific testing question:
+Generated repositories remain useful as internal smoke fixtures, but real-repository mutation is the main product.
 
-> Can a tool detect a known architecture violation inserted into real, otherwise working code?
+## Ownership
 
-The current workflow is:
+Homunculus owns the experiment:
 
-```text
-Real Git repository
-        ↓
-Detached worktree at a known commit
-        ↓
-Language adapter creates one dependency edit
-        ↓
-Build or tests verify the repository still works
-        ↓
-Evidence manifest records the exact mutation
-```
+- isolate a specific repository commit in a detached worktree;
+- apply one declared source transformation;
+- verify pre-edit hashes and permitted paths;
+- run builds and tests;
+- reject unexpected changes;
+- remove failed or disposable experiments; and
+- record exact evidence.
 
-Generated repositories remain useful as internal smoke fixtures, but they are not the primary Homunculus testing strategy.
+Lexicon supplies normalized semantic facts and source spans. Language adapters perform syntax-aware source transformations. Pitlord evaluates whether the resulting architecture is allowed.
 
-## Current command
+## Current mutation types
 
-```text
-homunculus architecture \
-  --repo PATH \
-  --output PATH \
-  --language go|python \
-  --request FILE \
-  [--base REV]
-```
+### Static dependency injection
 
-The request identifies:
+The original Go and Python adapters add an otherwise unused import relationship. This is retained as a parser and policy smoke primitive, but it does not meaningfully alter control flow.
 
-- the source file;
-- the source architecture area;
-- the target dependency;
-- the target architecture area; and
-- any additional verification commands.
+### Real call-chain bypass
 
-The first implementation requires explicit targets. Lexicon-backed candidate selection can be added later without changing the mutation engine.
-
-## Language-neutral core
-
-Homunculus itself does not edit Go or Python syntax.
-
-A mutation adapter receives the detached repository and returns a complete plan containing:
-
-- exact replacement contents for each edited file;
-- the required pre-edit SHA-256 hash;
-- the normalized relationship expected to be added; and
-- verification commands.
-
-The core engine then handles isolation, application, verification, cleanup, and evidence. Future language adapters use the same contract.
-
-## Current adapters
-
-### Go
-
-The Go adapter adds a blank direct import to an existing source file. It locates the nearest owning `go.mod` and runs:
+The first semantic recipe rewrites:
 
 ```text
-go test ./...
+caller -> middle wrapper -> target
 ```
 
-from that module.
+into:
 
-### Python
+```text
+caller -----------------> target
+```
 
-The Python adapter appends a never-called function containing the requested import. This creates a real static import relationship without importing the target during normal execution.
+The caller's existing source is changed to invoke the target directly. The Go adapter repairs imports, receiver expressions, argument substitution, and argument ordering, then runs `go test ./...` for the complete owning module.
 
-It performs a Python AST syntax check and then runs any tests declared by the request.
+This produces a genuine new direct call relationship and removes reliance on the intermediary at that call site.
+
+## Lexicon-driven corpus
+
+Homunculus consumes Lexicon's definite `calls` edges, symbol ownership, and source spans. It excludes `possible-calls` and constructs deterministic three-stage call chains without searching for named functions.
+
+The first Space Rocks game-server scan produced:
+
+```text
+10,734 definite three-stage call chains
+82 structurally eligible v1 bypasses
+```
+
+The corpus is sorted and divided into development, validation, and holdout sets. The benchmark selects distinct production chains from every split and avoids reusing the same middle symbol. Holdout chains are not used to shape individual rewrite examples.
+
+## Go bypass v1
+
+The first operator accepts conservative forwarding wrappers such as:
+
+```go
+func Forward(first, second Value) Result {
+    return target.Apply(second, first)
+}
+```
+
+A caller expression such as:
+
+```go
+middle.Forward(left, right)
+```
+
+can become:
+
+```go
+target.Apply(right, left)
+```
+
+Current support includes:
+
+- package-function forwarding;
+- method calls rooted in a forwarded parameter;
+- middle-receiver substitution;
+- imported downstream packages;
+- direct parameter substitution; and
+- reordered arguments.
+
+The operator rejects wrappers that compute arguments, use local variables, branch, lock, log, convert results, adapt errors, forward variadic arguments, or otherwise require unsupported behavior to be reproduced.
+
+A structurally eligible candidate can still fail compilation or tests. That is recorded as a failed experiment rather than concealed by selecting a different chain.
 
 ## Safety model
 
-Homunculus currently guarantees:
+Every experiment:
 
-- the source checkout is never modified;
-- every mutation is applied to a detached Git worktree;
-- the exact base commit is recorded;
-- stale edit plans are rejected using pre-edit file hashes;
-- edited paths cannot escape the worktree;
-- verification commands run directly without a command shell;
-- unexpected changed files cause failure;
-- normal failed experiments are restored and removed; and
-- successful experiments receive a machine-readable evidence manifest.
+1. resolves a specific Git commit;
+2. creates a detached worktree;
+3. verifies edited-file SHA-256 preimages;
+4. applies only declared edits;
+5. runs verification commands directly without a shell;
+6. rejects unplanned changed files;
+7. removes failed experiments; and
+8. writes `.homunculus/architecture-mutation.json` after success.
 
-If the source checkout contains uncommitted work, Homunculus records that fact but mutates only the selected committed revision. It never copies or changes those uncommitted files.
+If the source checkout contains uncommitted work, Homunculus records that fact but mutates only the selected committed revision. The source checkout is never modified.
 
-Passing verification proves that the selected checks passed. It is not mathematical proof that all runtime behavior is identical. The request should therefore use the strongest practical test suite for the affected repository area.
+Passing verification proves the selected checks passed. It is not mathematical proof that all possible behavior is identical.
 
-## Evidence manifest
+## First real Space Rocks bypass
 
-A successful run writes:
-
-```text
-.homunculus/architecture-mutation.json
-```
-
-The manifest records:
-
-- mutation ID and language;
-- source repository and detached worktree;
-- base commit;
-- whether the source checkout was dirty;
-- changed files;
-- before and after SHA-256 hashes;
-- expected added architecture relationships; and
-- verification commands and output.
-
-## Space Rocks validation
-
-The architecture mutation engine has been exercised against real Space Rocks code in both supported languages.
-
-### Go experiment
-
-Homunculus added a direct dependency from:
+The first validation mutation rewrote this real chain:
 
 ```text
-game.physics → game.damage
+cmd/game-server.runWithContext
+    -> networking.NewRoomManager
+    -> rooms.NewRoomManager
 ```
 
-by editing:
+into a direct call from `runWithContext` to `rooms.NewRoomManager`. The complete game-server `go test ./...` suite passed. The transformation was derived from Lexicon spans and the generic forwarding rule, not from hard-coded function names.
+
+## Benchmark workflow
 
 ```text
-services/game-server/internal/game/physics/vector.go
+Lexicon facts
+    ↓
+Deterministic A -> B -> C corpus
+    ↓
+Structural eligibility filter
+    ↓
+Development / validation / holdout selection
+    ↓
+Fresh detached worktree per chain
+    ↓
+Generic source rewrite
+    ↓
+Full module test suite
+    ↓
+Pass/fail evidence and worktree cleanup
 ```
 
-The full game-server `go test ./...` suite passed after the mutation.
+The benchmark command can run multiple distinct chains per split and records each chain, mutation, base commit, file hashes, and verification output.
 
-### Python experiment
+The first six-chain run passed four mutations and failed two because the proposed rewrites crossed a package boundary through an unexported field. That failure exposed a missing general eligibility rule. After adding cross-package visibility validation, the candidate set narrowed from 94 to 82. The final benchmark passed all six selected mutations: two development, two validation, and two holdout chains, each originating in a different caller file.
 
-Homunculus added a direct dependency from:
+This validates Homunculus's rewrite, isolation, and build/test behavior. Pitlord has not yet been run against these mutations.
 
-```text
-data-sync.model → data-sync.generators
-```
+## Current boundaries
 
-by editing:
+Homunculus currently mutates architecture only. It does not yet create general logic, performance, security, or documentation defects.
 
-```text
-tools/data_sync/data_sync/model/constants.py
-```
+The current semantic recipe supports Go. The corpus, benchmark runner, and experiment contracts are language-neutral and receive syntax behavior through an adapter; additional languages require their own bypass adapters.
 
-The syntax check passed, and the data-sync test suite reported:
-
-```text
-289 passed
-```
-
-Both experiments used detached worktrees from the same recorded Space Rocks commit. The original Space Rocks checkout remained unchanged.
-
-## Current non-goals
-
-Homunculus does not yet introduce:
-
-- general logic bugs;
-- performance defects;
-- security defects;
-- partial migrations;
-- documentation drift;
-- arbitrary code corruption; or
-- random mutations.
-
-Those can be considered later. The current product boundary is safe architecture dependency mutation.
-
-## Next integration
-
-The next useful layer is Lexicon-backed target selection and verification:
-
-1. Lexicon identifies source files and candidate target modules.
-2. Homunculus applies the selected adapter plan safely.
-3. Lexicon analyzes the mutated worktree.
-4. The observed relationship is compared with the manifest expectation.
-5. Pitlord must report the known architecture violation.
-
-This keeps ownership clear:
-
-- Lexicon understands source relationships;
-- language mutation adapters understand syntax edits;
-- Homunculus owns the controlled experiment;
-- Pitlord judges whether the architecture is allowed.
+The next integration is to rescan each successful mutation with Lexicon and require Pitlord to report the exact known direct relationship without unrelated diagnostics.

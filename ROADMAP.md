@@ -56,7 +56,7 @@ Ritual will define deterministic execution protocols for agent-assisted work. It
 
 ### [Warlock Runtime](docs/WARLOCK_RUNTIME.md)
 
-Warlock itself will become the shared runtime and supervisor for the toolchain's daemon swarm. The planned runtime will coordinate component discovery, process lifecycle, shared repository watching, normalized change events, health, diagnostics, and local IPC while preserving standalone operation and domain ownership in every component.
+Warlock itself will become the shared runtime and supervisor for the toolchain's daemon swarm. The planned runtime will coordinate component discovery, process lifecycle, shared repository watching, normalized change events, health, diagnostics, local IPC, and opt-in shared object storage while preserving standalone operation and domain ownership in every component.
 
 Runtime contracts should begin with concrete duplication already present across multiple tools. Warlock should coordinate focused services rather than collapse them into a monolith.
 
@@ -67,6 +67,7 @@ The toolchain is expected to converge on shared concepts where doing so creates 
 - repository discovery and ignore behavior;
 - shared repository watching and normalized change events;
 - daemon discovery, supervision, health, and local IPC;
+- per-tool opt-in shared object storage with standalone and custom-path exemptions;
 - stable file and document identity;
 - normalized paths, symbols, dependencies, and relationships;
 - incremental fingerprints and cache identities;

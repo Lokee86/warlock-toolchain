@@ -53,7 +53,7 @@ Incubus
 
 Grimoire's base retrieval engine does not require Arcana or Demon Docs; both are optional evidence providers. Every component remains independently runnable, while the planned Warlock runtime will provide shared watching, lifecycle, events, and IPC when multiple daemons are installed.
 
-This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md), [Grimoire design](docs/GRIMOIRE.md), [Incubus design](docs/INCUBUS.md), and [runtime design](docs/WARLOCK_RUNTIME.md) for current status.
+This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md), [Grimoire design](docs/GRIMOIRE.md), [Incubus design](docs/INCUBUS.md), [runtime design](docs/WARLOCK_RUNTIME.md), and [shared-storage policy](docs/SHARED_STORAGE.md) for current status.
 
 ## Principles
 

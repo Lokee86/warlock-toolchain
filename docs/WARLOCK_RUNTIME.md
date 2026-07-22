@@ -30,7 +30,8 @@ Warlock should eventually own:
 - service health and capability discovery;
 - common status and diagnostic reporting;
 - bounded resource and lifecycle policy;
-- stable local IPC conventions; and
+- stable local IPC conventions;
+- opt-in shared object storage and repository maintenance for compatible tools; and
 - shared caches only where multiple concrete consumers justify them.
 
 Warlock may summon and supervise services, but each service remains responsible for its own domain state and behavior.
@@ -92,7 +93,9 @@ Warlock owns coordination, not domain intelligence.
 - Homunculus owns controlled repository specimens and static defect scenarios.
 - Incubus owns declared runtime adversity and recovery scenarios.
 
-Warlock should not merge these stores or APIs into one universal internal model. Shared contracts should be introduced only where multiple real tools need the same fact or event.
+Warlock should not merge these tools' logical schemas or APIs into one universal internal model. It may optionally consolidate compatible physical object repositories behind namespaced refs, but only for tools explicitly configured to use Warlock-managed storage. Each tool continues to own its data format, versioning, migrations, and interpretation. Shared contracts should be introduced only where multiple real tools need the same fact, event, or storage primitive.
+
+See [Shared Storage](SHARED_STORAGE.md) for the opt-in storage policy, configuration modes, and migration rules.
 
 ## Performance principle
 

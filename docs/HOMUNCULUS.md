@@ -2,255 +2,190 @@
 
 **Status:** In development
 
-Homunculus is a deterministic repository specimen builder and defect-injection tool. It creates or modifies functional, or functionally representative, repositories according to explicit scenario definitions so repository tooling can be tested against known structures, defects, and expected outcomes.
+Homunculus creates controlled architecture defects in real repositories so architecture-analysis tools can be tested against known ground truth.
 
-The core idea is not random corruption. Homunculus should produce controlled repository states with plausible causes and consequences.
+Its current scope is intentionally narrow: add one direct dependency between two architectural areas while keeping the original checkout untouched and proving that the mutated checkout still passes its required verification.
 
-## Purpose
+## Current purpose
 
-Homunculus should make it possible to create reproducible repositories for:
+Homunculus answers a specific testing question:
 
-- integration and regression testing;
-- documentation-tool evaluation;
-- architecture and dependency analysis;
-- agent and workflow evaluation;
-- demonstrations and tutorials;
-- benchmark construction; and
-- reproducible bug reports.
+> Can a tool detect a known architecture violation inserted into real, otherwise working code?
 
-Every specimen should have a known answer key: what was created or changed, which invariants were preserved, what defects exist, and what participating tools are expected to detect.
-
-## Core model
+The current workflow is:
 
 ```text
-Known repository or maintained template
-              ↓
-      Homunculus scenario
-              ↓
-Controlled repository specimen
-              ↓
-Mutation manifest + expected findings
+Real Git repository
+        ↓
+Detached worktree at a known commit
+        ↓
+Language adapter creates one dependency edit
+        ↓
+Build or tests verify the repository still works
+        ↓
+Evidence manifest records the exact mutation
 ```
 
-A scenario should describe intent semantically where practical rather than merely naming arbitrary text edits.
+Generated repositories remain useful as internal smoke fixtures, but they are not the primary Homunculus testing strategy.
 
-Examples include:
-
-- partially migrate an API contract while leaving one consumer stale;
-- rename a symbol across only part of its dependent graph;
-- introduce a dependency cycle between valid packages;
-- bypass an intended architecture boundary;
-- update implementation behavior without updating related documentation;
-- move a file while leaving selected references or ownership metadata stale; and
-- invalidate the wrong portion of a cache dependency chain.
-
-Low-level corruptions may still be useful for parser and resilience testing, but graph-informed logical defects should be the primary value.
-
-## Operating modes
-
-### Build a specimen
-
-Create a predetermined repository from a maintained template and scenario.
+## Current command
 
 ```text
-homunculus build scenarios/go-service-decay.yaml
+homunculus architecture \
+  --repo PATH \
+  --output PATH \
+  --language go|python \
+  --request FILE \
+  [--base REV]
 ```
 
-The result should be reproducible from the same template version and scenario definition.
+The request identifies:
 
-### Corrupt a repository
+- the source file;
+- the source architecture area;
+- the target dependency;
+- the target architecture area; and
+- any additional verification commands.
 
-Apply declared defects to a copy of an existing repository.
+The first implementation requires explicit targets. Lexicon-backed candidate selection can be added later without changing the mutation engine.
+
+## Language-neutral core
+
+Homunculus itself does not edit Go or Python syntax.
+
+A mutation adapter receives the detached repository and returns a complete plan containing:
+
+- exact replacement contents for each edited file;
+- the required pre-edit SHA-256 hash;
+- the normalized relationship expected to be added; and
+- verification commands.
+
+The core engine then handles isolation, application, verification, cleanup, and evidence. Future language adapters use the same contract.
+
+## Current adapters
+
+### Go
+
+The Go adapter adds a blank direct import to an existing source file. It locates the nearest owning `go.mod` and runs:
 
 ```text
-homunculus corrupt ./fixture-repo scenarios/partial-migration.yaml
+go test ./...
 ```
 
-The tool should refuse destructive ambiguity. A scenario must identify valid targets or define deterministic selection rules.
+from that module.
 
-## Scenario shape
+### Python
 
-The exact schema remains undecided, but a scenario will likely need to express:
+The Python adapter appends a never-called function containing the requested import. This creates a real static import relationship without importing the target during normal execution.
 
-- base template or input repository;
-- template and schema versions;
-- required repository facts;
-- declared invariants;
-- ordered mutations;
-- permitted files or graph regions;
-- expected build and test state;
-- expected structural graph delta;
-- expected diagnostics; and
-- rollback or clean regeneration behavior.
+It performs a Python AST syntax check and then runs any tests declared by the request.
 
-Illustrative example:
+## Safety model
 
-```yaml
-scenario: stale-service-migration
-base:
-  template: go-http-service-v1
+Homunculus currently guarantees:
 
-preserve:
-  build: true
-  formatting: true
+- the source checkout is never modified;
+- every mutation is applied to a detached Git worktree;
+- the exact base commit is recorded;
+- stale edit plans are rejected using pre-edit file hashes;
+- edited paths cannot escape the worktree;
+- verification commands run directly without a command shell;
+- unexpected changed files cause failure;
+- normal failed experiments are restored and removed; and
+- successful experiments receive a machine-readable evidence manifest.
 
-mutations:
-  - type: incomplete_contract_migration
-    contract: UserCreatedEvent
-    update:
-      producer: true
-      consumers: all_except_one
-      documentation: false
+If the source checkout contains uncommitted work, Homunculus records that fact but mutates only the selected committed revision. It never copies or changes those uncommitted files.
 
-expect:
-  stale_consumers: 1
-  stale_documents: 1
-  failing_tests: 1
-```
+Passing verification proves that the selected checks passed. It is not mathematical proof that all runtime behavior is identical. The request should therefore use the strongest practical test suite for the affected repository area.
 
-This is a concept sketch, not a committed schema.
+## Evidence manifest
 
-## Arcana integration
-
-Arcana could make Homunculus substantially more precise.
-
-Before mutation, Arcana could provide:
-
-- package and module relationships;
-- symbol definitions and references;
-- producer and consumer relationships;
-- documentation-to-code relationships;
-- ownership and architecture boundaries; and
-- candidate mutation targets satisfying scenario constraints.
-
-After mutation, Arcana could verify the intended structural result:
-
-```yaml
-expected_graph_delta:
-  added_edges: 1
-  removed_edges: 2
-  new_cycles: 1
-  orphaned_nodes: 1
-```
-
-A graph-informed workflow would be:
+A successful run writes:
 
 ```text
-Functional repository
-        ↓
-Arcana maps relationships
-        ↓
-Homunculus selects a valid defect pattern
-        ↓
-Homunculus applies deterministic mutations
-        ↓
-Arcana verifies the structural delta
-        ↓
-Build, tests, and diagnostics verify the scenario
+.homunculus/architecture-mutation.json
 ```
 
-Arcana integration should be optional. Homunculus should still support simple file-level scenarios independently, while using Arcana for semantic defects and relationship-aware target selection.
+The manifest records:
 
-## Invariants and verification
-
-Scenarios should explicitly state what remains valid and what is intentionally broken.
-
-Examples:
-
-```yaml
-preserve:
-  - compilation
-  - formatting
-  - repository cleanliness
-
-break:
-  - documentation accuracy
-  - architecture policy
-```
-
-Homunculus should verify these claims rather than assuming that a mutation had the intended effect. A scenario that requests one broken consumer but produces three should fail generation.
-
-Possible verification layers include:
-
-- source and file assertions;
-- Arcana before-and-after comparison;
-- build status;
-- selected test results;
-- Demon Docs diagnostics;
-- Pitlord policy results; and
-- scenario-specific assertions.
-
-## Outputs
-
-Each run should emit a machine-readable manifest containing at least:
-
-- scenario identity and version;
-- input repository or template identity;
-- mutations applied;
+- mutation ID and language;
+- source repository and detached worktree;
+- base commit;
+- whether the source checkout was dirty;
 - changed files;
-- deliberately untouched related files;
-- preserved invariants;
-- intended defects;
-- expected findings; and
-- verification results.
+- before and after SHA-256 hashes;
+- expected added architecture relationships; and
+- verification commands and output.
 
-The generated repository and manifest together form the specimen.
+## Space Rocks validation
 
-## Current implementation baseline
+The architecture mutation engine has been exercised against real Space Rocks code in both supported languages.
 
-The first standalone implementation slice now exists in the `homunculus` project directory. It provides:
+### Go experiment
 
-- a built-in `layered-service` profile;
-- equivalent functional Go and Python specimens;
-- deterministic source bytes and content-hashed manifests;
-- explicit `api`, `service`, and `storage` architecture ground truth;
-- a build-preserving `api-bypasses-service` mutation;
-- expected normalized import and call relationships;
-- an expected future Pitlord diagnostic;
-- tracked-source and content-integrity verification;
-- `go test ./...` verification for Go specimens;
-- Python syntax plus functional-call verification; and
-- automatic rollback when a mutation fails its declared invariants.
-
-Current commands are:
+Homunculus added a direct dependency from:
 
 ```text
-homunculus build --language go|python --output PATH
-homunculus mutate --specimen PATH --mutation api-bypasses-service
-homunculus verify --specimen PATH
+game.physics → game.damage
 ```
 
-This slice deliberately uses maintained renderers and a built-in profile rather than introducing a general scenario language before the specimen and mutation contracts have been exercised by Lexicon, Arcana, and Pitlord.
+by editing:
 
-## Initial scope
+```text
+services/game-server/internal/game/physics/vector.go
+```
 
-The next implementation scope should remain narrow:
+The full game-server `go test ./...` suite passed after the mutation.
 
-1. Run the generated clean and mutated specimens through Lexicon's Go and Python adapters.
-2. Record and compare the actual normalized facts against the manifest ground truth.
-3. Sync both states into Arcana and verify the expected graph delta.
-4. Use the same specimens to drive Pitlord's first direct architecture-boundary rule.
-5. Add a small versioned scenario file only after the built-in profile proves the required fields.
-6. Add a second mutation pattern before generalizing target selection.
+### Python experiment
 
-Broad language support, arbitrary repository mutation, and Arcana-backed target selection can come later.
+Homunculus added a direct dependency from:
 
-## Non-goals
+```text
+data-sync.model → data-sync.generators
+```
 
-Homunculus is not intended to be:
+by editing:
 
-- a random source-code generator;
-- a fuzzing replacement;
-- a universal program synthesizer;
-- a general-purpose code translator;
-- an autonomous bug-writing agent; or
-- a guarantee that every requested semantic defect can be introduced safely.
+```text
+tools/data_sync/data_sync/model/constants.py
+```
 
-## Open questions
+The syntax check passed, and the data-sync test suite reported:
 
-- Should templates live with Homunculus, in separate repositories, or both?
-- How should scenarios identify semantic targets before Arcana integration exists?
-- Which invariants must be verified by Homunculus itself versus delegated tools?
-- Should corruption always operate on disposable copies or support explicit in-place mode?
-- How should scenario and template versions compose into a stable specimen identity?
-- What is the smallest useful defect vocabulary for the first prototype?
+```text
+289 passed
+```
+
+Both experiments used detached worktrees from the same recorded Space Rocks commit. The original Space Rocks checkout remained unchanged.
+
+## Current non-goals
+
+Homunculus does not yet introduce:
+
+- general logic bugs;
+- performance defects;
+- security defects;
+- partial migrations;
+- documentation drift;
+- arbitrary code corruption; or
+- random mutations.
+
+Those can be considered later. The current product boundary is safe architecture dependency mutation.
+
+## Next integration
+
+The next useful layer is Lexicon-backed target selection and verification:
+
+1. Lexicon identifies source files and candidate target modules.
+2. Homunculus applies the selected adapter plan safely.
+3. Lexicon analyzes the mutated worktree.
+4. The observed relationship is compared with the manifest expectation.
+5. Pitlord must report the known architecture violation.
+
+This keeps ownership clear:
+
+- Lexicon understands source relationships;
+- language mutation adapters understand syntax edits;
+- Homunculus owns the controlled experiment;
+- Pitlord judges whether the architecture is allowed.

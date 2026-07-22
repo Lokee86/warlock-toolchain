@@ -10,14 +10,14 @@ Lexicon identifies semantic possibilities in a repository. A language adapter fi
 
 Candidate selection may be explicit or seeded-random from the adapter-approved set. The repository commit, fact snapshot, adapter version, candidate population, selection mode, and random seed must make every experiment reproducible.
 
-## Planned mutation families
+## Mutation families
 
-- partial layer and boundary bypasses affecting only selected callers;
+- partial layer and boundary bypasses affecting only selected callers — implemented for Go forwarding wrappers;
+- generated forwarding packages for configurable call and dependency depth — next;
 - relocation of low-coupling functions into architecturally incorrect packages;
 - responsibility duplication with only some callers redirected;
 - interface-to-concrete coupling;
 - controlled encapsulation breaches;
-- generated forwarding packages for configurable call and dependency depth;
 - rerouting through existing compatible components;
 - architecture-level cycles that remain legal to the implementation language; and
 - gradual responsibility accumulation into god packages.

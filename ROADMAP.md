@@ -22,7 +22,7 @@ Current work focuses on:
 - repository-scale performance characteristics; and
 - a stable fact model that other Warlock tools can consume.
 
-Likely next work includes repository extraction adapters, normalized nodes and edges, persistence contracts, and integration boundaries for documentation and policy tools.
+Likely next work includes consuming Lexicon's normalized source facts, persistence contracts, and integration boundaries for documentation and policy tools. Language adapters are owned by Lexicon rather than duplicated inside Arcana.
 
 ### [Grimoire](docs/GRIMOIRE.md)
 
@@ -30,11 +30,19 @@ Grimoire is being built as a lightweight local context compiler around continuou
 
 Arcana and Demon Docs will be optional evidence providers rather than foundational dependencies. Grimoire should remain agent-independent, avoid generative models and heavy RAG infrastructure, and keep interactive context compilation within strict latency bounds by moving parsing, chunking, and repository embedding work to incremental index maintenance.
 
+### [Lexicon](https://github.com/Lokee86/lexicon)
+
+Lexicon is establishing the shared language-analysis layer for the Warlock toolchain: one comprehensive adapter per programming language plus a versioned normalized schema for symbols, dependencies, calls, references, source locations, and unresolved relationships.
+
+The standalone repository now owns the neutral facts-v1 contract. Initial Ruby, Python, GDScript, Rust, and TypeScript adapters are under development in isolated streams. The existing Arcana Go adapter will migrate after active Arcana work leaves a safe extraction boundary.
+
+Lexicon is an explicit shared dependency for tools that require language understanding. Tool independence means the tools remain separate usable products; it does not require duplicating language-analysis work in every repository.
+
 ## Planned
 
 ### Pitlord
 
-Pitlord will provide polyglot architecture and ownership enforcement. Its intended role is to evaluate repository policy against normalized paths, dependencies, symbols, and relationships rather than embedding every rule in language-specific scripts.
+Pitlord will provide polyglot architecture and ownership enforcement. It will consume normalized paths, dependencies, symbols, relationships, and source locations from Lexicon, then apply Pitlord-owned policy without maintaining separate language adapters.
 
 ### Cantrip
 
@@ -69,7 +77,7 @@ The toolchain is expected to converge on shared concepts where doing so creates 
 - daemon discovery, supervision, health, and local IPC;
 - per-tool opt-in shared object storage with standalone and custom-path exemptions;
 - stable file and document identity;
-- normalized paths, symbols, dependencies, and relationships;
+- Lexicon-owned normalized paths, symbols, dependencies, and relationships;
 - incremental fingerprints and cache identities;
 - machine-readable diagnostics;
 - explicit ownership and mutation boundaries;

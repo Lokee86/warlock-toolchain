@@ -9,6 +9,7 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | Project | Purpose | Status |
 | --- | --- | --- |
 | [Demon Docs](https://github.com/Lokee86/demon-docs) | Documentation integrity, schemas, links, indexes, codemaps, and maintenance | Available |
+| [**Lexicon**](https://github.com/Lokee86/lexicon) | Shared polyglot language adapters and normalized source facts | In development |
 | [Arcana](https://github.com/Lokee86/arcana-graph) | Language-independent repository relationship graph | In development |
 | [**Grimoire**](docs/GRIMOIRE.md) | Lightweight indexed retrieval and token-bounded repository context compilation | In development |
 | **Pitlord** | Polyglot architecture, dependency, and ownership enforcement | Planned |
@@ -17,7 +18,7 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | [**Incubus**](docs/INCUBUS.md) | Deterministic runtime adversity, disruption, and recovery testing | Planned |
 | **Ritual** | Deterministic execution protocols for agent-assisted work | Planned |
 
-Each component remains independently useful. Together, they are intended to share repository facts, identities, relationships, and policy so humans and software agents can work from the same durable understanding of a codebase. [Warlock itself](docs/WARLOCK_RUNTIME.md) is also intended to become the shared runtime and supervisor for the toolchain's daemon swarm.
+Each component remains independently useful. Independently useful does not mean dependency-free: shared capabilities such as language analysis may be explicit dependencies when duplicating them would create worse products. Together, the tools are intended to share repository facts, identities, relationships, and policy so humans and software agents can work from the same durable understanding of a codebase. [Warlock itself](docs/WARLOCK_RUNTIME.md) is also intended to become the shared runtime and supervisor for the toolchain's daemon swarm.
 
 ## Why Warlock exists
 
@@ -33,6 +34,7 @@ Warlock moves that knowledge into repository-owned systems that can be inspected
 Warlock runtime
     discovers, supervises, and feeds the daemon swarm
     │
+    ├── Lexicon extracts shared language facts
     ├── Demon Docs preserves documented knowledge
     ├── Arcana maps repository relationships
     ├── Grimoire compiles fast, bounded working context
@@ -53,7 +55,7 @@ Incubus
 
 Grimoire's base retrieval engine does not require Arcana or Demon Docs; both are optional evidence providers. Every component remains independently runnable, while the planned Warlock runtime will provide shared watching, lifecycle, events, and IPC when multiple daemons are installed.
 
-This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md), [Grimoire design](docs/GRIMOIRE.md), [Incubus design](docs/INCUBUS.md), [runtime design](docs/WARLOCK_RUNTIME.md), and [shared-storage policy](docs/SHARED_STORAGE.md) for current status.
+This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md), [Lexicon design](docs/LEXICON.md), [Grimoire design](docs/GRIMOIRE.md), [Incubus design](docs/INCUBUS.md), [runtime design](docs/WARLOCK_RUNTIME.md), and [shared-storage policy](docs/SHARED_STORAGE.md) for current status.
 
 ## Principles
 
@@ -67,7 +69,7 @@ This is the intended integration direction, not a claim that every component or 
 
 ## Current status
 
-[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire is now also in development with an incremental lexical index, deterministic ranking, bounded whole-chunk selection, and inspectable context packages. Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
+[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire is now also in development with an incremental lexical index, deterministic ranking, bounded whole-chunk selection, and inspectable context packages. [Lexicon](https://github.com/Lokee86/lexicon) is now in development as the shared owner of language adapters and normalized source facts. Ruby, Python, GDScript, Rust, and TypeScript adapters are beginning in parallel while the existing Go adapter remains temporarily in Arcana. Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
 
 Warlock itself currently serves as the documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. It is also planned to become the shared daemon runtime and supervisor, while domain implementation remains in the independently useful component repositories.
 

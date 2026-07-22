@@ -24,13 +24,13 @@ Current work focuses on:
 
 Likely next work includes repository extraction adapters, normalized nodes and edges, persistence contracts, and integration boundaries for documentation and policy tools.
 
-## Planned
-
 ### [Grimoire](docs/GRIMOIRE.md)
 
-Grimoire will be a lightweight local context compiler built around continuously maintained repository indexes. Its standalone core will combine lexical, structural, metadata, and optional onboard embedding retrieval, then apply simple inspectable ranking and model-aware token budgeting to emit bounded context packages.
+Grimoire is being built as a lightweight local context compiler around continuously maintained repository indexes. Its first lexical baseline now provides incremental indexing, deterministic ranking, bounded whole-chunk selection, and inspectable JSON context packages. Later stages will add structural metadata, model-aware tokenization, and optional onboard embedding retrieval.
 
 Arcana and Demon Docs will be optional evidence providers rather than foundational dependencies. Grimoire should remain agent-independent, avoid generative models and heavy RAG infrastructure, and keep interactive context compilation within strict latency bounds by moving parsing, chunking, and repository embedding work to incremental index maintenance.
+
+## Planned
 
 ### Pitlord
 

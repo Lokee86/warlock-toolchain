@@ -1,6 +1,6 @@
 # Grimoire
 
-Grimoire is a planned lightweight repository context engine. Its core job is to compile a small, relevant, token-bounded context package from a continuously maintained local index before a human, agent, editor, or automation system begins work.
+Grimoire is an in-development lightweight repository context engine. Its core job is to compile a small, relevant, token-bounded context package from a continuously maintained local index before a human, agent, editor, or automation system begins work.
 
 Grimoire is independently useful. Arcana and Demon Docs can improve its results, but neither is required for its basic operation.
 
@@ -182,9 +182,23 @@ Grimoire is not intended to become:
 - a replacement for Demon Docs; or
 - a universal repository intelligence monolith.
 
+## Current implementation baseline
+
+The first implementation slice now exists in the standalone `grimoire` project directory. It provides:
+
+- an incremental local JSON index with unchanged-file reuse;
+- a deterministic fallback chunker for supported text files;
+- lexical, filename, path, and leading-line ranking signals;
+- whole-chunk fitting under a conservative content-token budget;
+- inspectable, agent-independent JSON context packages;
+- a CLI path that reads only prepared index state during context requests; and
+- tests plus a warm retrieval benchmark over 10,000 prepared chunks.
+
+This is deliberately the lexical baseline. Language-aware chunking, model-specific tokenizers, semantic retrieval, Arcana evidence, Demon Docs evidence, daemon maintenance, and Warlock hosting remain later work.
+
 ## Implementation direction
 
-Go is the current likely implementation language because the product requires fast startup, simple distribution, predictable concurrency, and close operational compatibility with the rest of the toolchain. This is an implementation direction rather than a requirement of the product boundary.
+Grimoire is implemented in Go because the product requires fast startup, simple distribution, predictable concurrency, and close operational compatibility with the rest of the toolchain. The product boundary remains language-independent.
 
 The first useful version should remain narrow:
 

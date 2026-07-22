@@ -2,7 +2,7 @@
 
 Warlock is both the umbrella project for the toolchain and the planned shared runtime for its daemon swarm.
 
-Demon Docs, ArcanaGraph, Grimoire, Pitlord, and future components remain independently useful products. When multiple components are installed, Warlock should coordinate their shared operational needs without absorbing their product ownership.
+Demon Docs, Arcana, Grimoire, Pitlord, and future components remain independently useful products. When multiple components are installed, Warlock should coordinate their shared operational needs without absorbing their product ownership.
 
 ## Purpose
 
@@ -46,7 +46,7 @@ Warlock
 ├── local IPC
 │
 ├── Demon Docs service
-├── ArcanaGraph service
+├── Arcana service
 ├── Grimoire service
 ├── Pitlord service
 └── other installed services
@@ -60,7 +60,7 @@ For example:
 source file changed
     ↓
 Warlock publishes normalized change event
-    ├── ArcanaGraph updates affected relationships
+    ├── Arcana updates affected relationships
     ├── Grimoire updates affected retrieval chunks and embeddings
     ├── Pitlord re-evaluates affected policy
     └── Demon Docs updates only relevant documentation state
@@ -84,7 +84,7 @@ When Warlock is available, the component may delegate duplicate runtime concerns
 Warlock owns coordination, not domain intelligence.
 
 - Demon Docs owns documentation integrity and maintenance.
-- ArcanaGraph owns repository entities and relationships.
+- Arcana owns repository entities and relationships.
 - Grimoire owns context retrieval, ranking, budgeting, and packaging.
 - Pitlord owns architecture and ownership policy evaluation.
 - Cantrip owns portable skills.

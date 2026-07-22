@@ -110,11 +110,11 @@ expect:
 
 This is a concept sketch, not a committed schema.
 
-## ArcanaGraph integration
+## Arcana integration
 
-ArcanaGraph could make Homunculus substantially more precise.
+Arcana could make Homunculus substantially more precise.
 
-Before mutation, ArcanaGraph could provide:
+Before mutation, Arcana could provide:
 
 - package and module relationships;
 - symbol definitions and references;
@@ -123,7 +123,7 @@ Before mutation, ArcanaGraph could provide:
 - ownership and architecture boundaries; and
 - candidate mutation targets satisfying scenario constraints.
 
-After mutation, ArcanaGraph could verify the intended structural result:
+After mutation, Arcana could verify the intended structural result:
 
 ```yaml
 expected_graph_delta:
@@ -138,18 +138,18 @@ A graph-informed workflow would be:
 ```text
 Functional repository
         ↓
-ArcanaGraph maps relationships
+Arcana maps relationships
         ↓
 Homunculus selects a valid defect pattern
         ↓
 Homunculus applies deterministic mutations
         ↓
-ArcanaGraph verifies the structural delta
+Arcana verifies the structural delta
         ↓
 Build, tests, and diagnostics verify the scenario
 ```
 
-ArcanaGraph integration should be optional. Homunculus should still support simple file-level scenarios independently, while using ArcanaGraph for semantic defects and relationship-aware target selection.
+Arcana integration should be optional. Homunculus should still support simple file-level scenarios independently, while using Arcana for semantic defects and relationship-aware target selection.
 
 ## Invariants and verification
 
@@ -173,7 +173,7 @@ Homunculus should verify these claims rather than assuming that a mutation had t
 Possible verification layers include:
 
 - source and file assertions;
-- ArcanaGraph before-and-after comparison;
+- Arcana before-and-after comparison;
 - build status;
 - selected test results;
 - Demon Docs diagnostics;
@@ -205,7 +205,7 @@ A useful first prototype should remain narrow:
 3. Implement several deterministic file- and relationship-level defects.
 4. Emit a complete mutation manifest.
 5. Verify build or test expectations.
-6. Add ArcanaGraph-backed target selection once its graph contracts are stable enough.
+6. Add Arcana-backed target selection once its graph contracts are stable enough.
 
 The first milestone should prove that Homunculus can create the same functional specimen with the same known defects repeatedly. Broad language support and arbitrary repository mutation can come later.
 
@@ -223,7 +223,7 @@ Homunculus is not intended to be:
 ## Open questions
 
 - Should templates live with Homunculus, in separate repositories, or both?
-- How should scenarios identify semantic targets before ArcanaGraph integration exists?
+- How should scenarios identify semantic targets before Arcana integration exists?
 - Which invariants must be verified by Homunculus itself versus delegated tools?
 - Should corruption always operate on disposable copies or support explicit in-place mode?
 - How should scenario and template versions compose into a stable specimen identity?

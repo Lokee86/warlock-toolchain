@@ -10,9 +10,9 @@ Demon Docs provides deterministic documentation maintenance and repository-owned
 
 ## In development
 
-### ArcanaGraph
+### Arcana
 
-ArcanaGraph is establishing a language-independent repository graph foundation.
+Arcana is establishing a language-independent repository graph foundation.
 
 Current work focuses on:
 
@@ -26,11 +26,11 @@ Likely next work includes repository extraction adapters, normalized nodes and e
 
 ## Planned
 
-### [Grimoire Context](docs/GRIMOIRE.md)
+### [Grimoire](docs/GRIMOIRE.md)
 
-Grimoire Context will be a lightweight local context compiler built around continuously maintained repository indexes. Its standalone core will combine lexical, structural, metadata, and optional onboard embedding retrieval, then apply simple inspectable ranking and model-aware token budgeting to emit bounded context packages.
+Grimoire will be a lightweight local context compiler built around continuously maintained repository indexes. Its standalone core will combine lexical, structural, metadata, and optional onboard embedding retrieval, then apply simple inspectable ranking and model-aware token budgeting to emit bounded context packages.
 
-ArcanaGraph and Demon Docs will be optional evidence providers rather than foundational dependencies. Grimoire should remain agent-independent, avoid generative models and heavy RAG infrastructure, and keep interactive context compilation within strict latency bounds by moving parsing, chunking, and repository embedding work to incremental index maintenance.
+Arcana and Demon Docs will be optional evidence providers rather than foundational dependencies. Grimoire should remain agent-independent, avoid generative models and heavy RAG infrastructure, and keep interactive context compilation within strict latency bounds by moving parsing, chunking, and repository embedding work to incremental index maintenance.
 
 ### Pitlord
 
@@ -42,7 +42,7 @@ Cantrip will provide portable, versioned, and testable skills for agents and aut
 
 ### [Homunculus](docs/HOMUNCULUS.md)
 
-Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports. ArcanaGraph may provide relationship-aware target selection and before-and-after structural verification for more plausible logical defects.
+Homunculus will create controlled repository specimens from predetermined templates and schemas. It will support deterministic injection of specified defects into functional or functionally representative repositories, preserving declared invariants such as successful builds unless a scenario explicitly breaks them. Each scenario should produce a known manifest of mutations and expected findings for tool tests, demonstrations, benchmarks, and reproducible bug reports. Arcana may provide relationship-aware target selection and before-and-after structural verification for more plausible logical defects.
 
 ### [Incubus](docs/INCUBUS.md)
 

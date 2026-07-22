@@ -1,8 +1,8 @@
-# Grimoire Context
+# Grimoire
 
-Grimoire Context is a planned lightweight repository context engine. Its core job is to compile a small, relevant, token-bounded context package from a continuously maintained local index before a human, agent, editor, or automation system begins work.
+Grimoire is a planned lightweight repository context engine. Its core job is to compile a small, relevant, token-bounded context package from a continuously maintained local index before a human, agent, editor, or automation system begins work.
 
-Grimoire is independently useful. ArcanaGraph and Demon Docs can improve its results, but neither is required for its basic operation.
+Grimoire is independently useful. Arcana and Demon Docs can improve its results, but neither is required for its basic operation.
 
 ## Product definition
 
@@ -26,7 +26,7 @@ This is retrieval for retrieval-augmented generation, but Grimoire does not own 
 
 ## Core independence
 
-Grimoire's basic function does not depend on ArcanaGraph.
+Grimoire's basic function does not depend on Arcana.
 
 Standalone Grimoire can index and rank evidence using:
 
@@ -107,7 +107,7 @@ Initial ranking should remain simple and explainable. Candidate signals may incl
 - current Git changes and recency;
 - repository configuration;
 - documentation authority supplied by Demon Docs; and
-- relationship evidence supplied by ArcanaGraph.
+- relationship evidence supplied by Arcana.
 
 Grimoire should use existing libraries and formats wherever practical. It should not create a tokenizer, vector database, parser framework, ranking language, or model runtime unless existing options fail a demonstrated requirement.
 
@@ -153,11 +153,11 @@ The package format should be independent of any specific agent or model provider
 
 ## Optional integrations
 
-### ArcanaGraph
+### Arcana
 
-ArcanaGraph is an optional relationship provider. It can supply candidates that lexical and semantic retrieval may miss, including indirect callers, state mutation, serialization, tests through abstractions, dependency paths, and other repository relationships.
+Arcana is an optional relationship provider. It can supply candidates that lexical and semantic retrieval may miss, including indirect callers, state mutation, serialization, tests through abstractions, dependency paths, and other repository relationships.
 
-Grimoire owns context selection and budgeting. ArcanaGraph owns durable repository relationships. Grimoire must not grow its own general-purpose relationship graph to duplicate ArcanaGraph.
+Grimoire owns context selection and budgeting. Arcana owns durable repository relationships. Grimoire must not grow its own general-purpose relationship graph to duplicate Arcana.
 
 ### Demon Docs
 
@@ -178,7 +178,7 @@ Grimoire is not intended to become:
 - a hosted RAG platform;
 - an external vector-database deployment;
 - an autonomous multi-stage retrieval loop;
-- a replacement for ArcanaGraph;
+- a replacement for Arcana;
 - a replacement for Demon Docs; or
 - a universal repository intelligence monolith.
 
@@ -193,4 +193,4 @@ The first useful version should remain narrow:
 3. Fit selected chunks into a model-aware token budget.
 4. Emit inspectable context packages.
 5. Add a small onboard embedding model once the lexical baseline and latency benchmarks can measure its value and cost.
-6. Add Demon Docs and ArcanaGraph as optional evidence providers through stable interfaces.
+6. Add Demon Docs and Arcana as optional evidence providers through stable interfaces.

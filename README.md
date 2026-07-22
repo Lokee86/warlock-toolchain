@@ -9,8 +9,8 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | Project | Purpose | Status |
 | --- | --- | --- |
 | [Demon Docs](https://github.com/Lokee86/demon-docs) | Documentation integrity, schemas, links, indexes, codemaps, and maintenance | Available |
-| [ArcanaGraph](https://github.com/Lokee86/arcana-graph) | Language-independent repository relationship graph | In development |
-| [**Grimoire Context**](docs/GRIMOIRE.md) | Lightweight indexed retrieval and token-bounded repository context compilation | Planned |
+| [Arcana](https://github.com/Lokee86/arcana-graph) | Language-independent repository relationship graph | In development |
+| [**Grimoire**](docs/GRIMOIRE.md) | Lightweight indexed retrieval and token-bounded repository context compilation | Planned |
 | **Pitlord** | Polyglot architecture, dependency, and ownership enforcement | Planned |
 | **Cantrip** | Portable, versioned, and testable skills for agents and automation | Planned |
 | **Homunculus** | Schema-driven functional repository specimens and deterministic defect injection | Planned |
@@ -34,7 +34,7 @@ Warlock runtime
     discovers, supervises, and feeds the daemon swarm
     │
     ├── Demon Docs preserves documented knowledge
-    ├── ArcanaGraph maps repository relationships
+    ├── Arcana maps repository relationships
     ├── Grimoire compiles fast, bounded working context
     └── Pitlord enforces architectural boundaries
 
@@ -51,7 +51,7 @@ Incubus
     applies reproducible adversity to running systems
 ```
 
-Grimoire's base retrieval engine does not require ArcanaGraph or Demon Docs; both are optional evidence providers. Every component remains independently runnable, while the planned Warlock runtime will provide shared watching, lifecycle, events, and IPC when multiple daemons are installed.
+Grimoire's base retrieval engine does not require Arcana or Demon Docs; both are optional evidence providers. Every component remains independently runnable, while the planned Warlock runtime will provide shared watching, lifecycle, events, and IPC when multiple daemons are installed.
 
 This is the intended integration direction, not a claim that every component or integration is complete today. See the [roadmap](ROADMAP.md), [Grimoire design](docs/GRIMOIRE.md), [Incubus design](docs/INCUBUS.md), and [runtime design](docs/WARLOCK_RUNTIME.md) for current status.
 
@@ -67,7 +67,7 @@ This is the intended integration direction, not a claim that every component or 
 
 ## Current status
 
-[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [ArcanaGraph](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire Context, Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
+[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. Grimoire, Pitlord, Cantrip, Homunculus, Incubus, and Ritual currently describe planned product boundaries.
 
 Warlock itself currently serves as the documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. It is also planned to become the shared daemon runtime and supervisor, while domain implementation remains in the independently useful component repositories.
 

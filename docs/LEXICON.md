@@ -55,6 +55,12 @@ Warlock tools remain separate products, but separate products do not need to be 
 
 Where a tool requires language analysis, depending on Lexicon is preferable to reproducing the same parser, type-resolution, and relationship-extraction work in every repository. A tool may still have useful modes that do not require Lexicon, but language-aware features may require it explicitly.
 
+## Possible post-0.1.0 product consolidation
+
+The implementation boundary between Lexicon and Arcana remains valid, but their separate user-facing product boundaries may be stronger than necessary. A future review may make Lexicon the primary consumer interface and treat Arcana as its optimized graph backend while preserving Arcana as a separate Rust process and advanced interface.
+
+This is explicitly deferred until after the 0.1.0 suite. See [Possible Future Lexicon–Arcana Consolidation](LEXICON_ARCANA_BOUNDARY_REVIEW.md).
+
 ## Adapter implementation
 
 Adapters may be implemented in the language best suited to analyze their target language. For example, the Go adapter may be written in Go so it can use Go's parser, type checker, package loader, SSA, and related analysis libraries.

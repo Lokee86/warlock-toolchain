@@ -2,7 +2,7 @@
 
 **Status:** In development
 
-Homunculus introduces controlled architecture defects into real repositories so architecture-analysis and enforcement tools can be tested against known ground truth.
+Homunculus is a deterministic source-mutation system for creating controlled repository defects with known ground truth. Its current implementation introduces architecture defects into real repositories so architecture-analysis and enforcement tools can be tested precisely.
 
 Its primary requirement is unusual:
 
@@ -96,6 +96,22 @@ The operator rejects wrappers that compute arguments, use local variables, branc
 
 A structurally eligible candidate can still fail compilation or tests. That is recorded as a failed experiment rather than concealed by selecting a different chain.
 
+## Security mutation direction
+
+Cybersecurity is a natural future mutation profile for Homunculus, but it does not redefine the product as an offensive-security tool. The same controlled transformation model can introduce known security-relevant defects into owned repositories so analyzers, fuzzers, tests, review agents, and defensive controls can be measured against exact ground truth.
+
+Potential recipes include:
+
+- removing or bypassing an authorization check;
+- weakening validation, sanitization, or encoding at a declared boundary;
+- introducing an unsafe file, path, parser, serialization, or logging pattern;
+- exposing a secret through an existing diagnostic path;
+- weakening a cryptographic or transport configuration;
+- introducing unsafe shared state or a resource-exhaustion path; and
+- changing dependency or call structure so a trusted boundary is bypassed.
+
+Every recipe must remain syntax-aware, narrowly declared, reversible through worktree disposal, and verified against explicit build and test requirements. Homunculus creates the controlled source condition; it does not probe remote targets or exercise the runtime consequence. Incubus owns that runtime-adversity surface.
+
 ## Safety model
 
 Every experiment:
@@ -153,7 +169,9 @@ This validates Homunculus's rewrite, isolation, and build/test behavior. Pitlord
 
 ## Current boundaries
 
-Homunculus currently mutates architecture only. It does not yet create general logic, performance, security, or documentation defects.
+Homunculus currently mutates architecture only, and architecture remains the immediate implementation priority. Future deterministic mutation profiles may include security-relevant source defects and other narrowly defined defect classes when they can preserve the same ground-truth, isolation, and verification guarantees.
+
+Runtime adversity and exploitability exercises belong to Incubus. Homunculus owns the source transformation and resulting defect manifest, not remote probing or live-system attack behavior.
 
 The current semantic recipe supports Go. The corpus, benchmark runner, and experiment contracts are language-neutral and receive syntax behavior through an adapter; additional languages require their own bypass adapters.
 

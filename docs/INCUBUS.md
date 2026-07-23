@@ -1,8 +1,10 @@
 # Incubus
 
-Incubus is a planned deterministic runtime-adversity harness for testing live systems under hostile but reproducible conditions.
+Incubus is a planned deterministic runtime-adversity and edge-case exploration harness for testing live systems under hostile but reproducible conditions.
 
-Its job is not to generate repositories or static defects. Incubus applies controlled pressure, disruption, and failure to running software, then records what happened and verifies whether the system recovered or converged correctly.
+Its job is not to generate repositories or static defects. Incubus systematically torments running software with controlled pressure, disruption, malformed interactions, unusual sequencing, and failure conditions. It records what happened, preserves enough evidence to reproduce the run, and verifies how the system behaved, failed, recovered, or converged.
+
+Cybersecurity is one application of this broader purpose, not Incubus's defining identity. Reliability, networking, distributed systems, persistence, concurrency, gameplay, and security all expose edge cases through the same underlying model: apply bounded adversity, observe the result, and compare it with declared expectations.
 
 Space Rocks is the intended first real test target. Its multiplayer server, clients, APIs, transports, tunnels, persistence, and observability systems provide concrete requirements for the tool before it is generalized for the rest of the Warlock toolchain.
 
@@ -24,7 +26,7 @@ evaluate declared assertions
 emit a reproducible run manifest
 ```
 
-It is best described as a deterministic adversity or chaos harness. It may use existing load-generation, network-control, process-management, and fault-injection facilities rather than recreating them. Incubus owns scenario coordination, repeatability, evidence, and assertions.
+It is best described as a deterministic adversity, edge-case exploration, or chaos harness. It may use existing load-generation, network-control, process-management, fault-injection, fuzzing, and protocol-testing facilities rather than recreating them. Incubus owns scenario coordination, repeatability, bounded exploration, evidence, and assertions.
 
 ## Initial adversity domains
 
@@ -39,9 +41,31 @@ Incubus scenarios may coordinate:
 - concurrent edits and watcher storms;
 - partial writes, stale reads, and interrupted persistence;
 - clock, deadline, timeout, and scheduling pressure; and
-- high-concurrency joins, leaves, requests, or other domain actions.
+- high-concurrency joins, leaves, requests, or other domain actions;
+- malformed, truncated, duplicated, replayed, or semantically invalid inputs;
+- unusual state-machine transitions and action sequences;
+- trust-boundary, authentication, authorization, and session-handling edge cases; and
+- bounded adversarial exploration of declared interfaces.
 
 The first implementation should support only the adversity controls required by concrete Space Rocks scenarios. A universal chaos platform is not the initial goal.
+
+## Security as an adversity profile
+
+Security testing fits Incubus because many vulnerabilities are edge cases deliberately exercised by an adversarial actor. The security profile should use the same scenario, scope, evidence, and assertion model as every other Incubus domain rather than becoming a separate offensive architecture.
+
+Useful security scenarios may include:
+
+- hostile or malformed input against declared interfaces;
+- authentication, authorization, and privilege-transition sequences;
+- stale-session, token-replay, and message-replay behavior;
+- protocol state confusion and invalid transition attempts;
+- resource-exhaustion and denial-of-service resistance within explicit budgets;
+- validation of containment, telemetry, rate limits, cleanup, and recovery; and
+- controlled exercise of a known defect introduced by Homunculus.
+
+Security runs must remain explicitly authorized and bounded. Scenario manifests should identify allowed targets, capabilities, resource and request limits, prohibited actions, cleanup behavior, and stop conditions. Incubus should default to local, isolated, or deliberately enrolled test environments and retain complete evidence of every action it attempted.
+
+Incubus is not defined as a penetration-testing product, malware framework, or autonomous red-team agent. Security is one profile of controlled runtime adversity.
 
 ## Space Rocks use case
 
@@ -126,7 +150,9 @@ Incubus
     subjects running systems to controlled hostile conditions
 ```
 
-They may be combined. Homunculus could create a repository or deployment with known structural properties, after which Incubus runs deterministic runtime-adversity scenarios against the resulting system.
+They may be combined. Homunculus could create a repository or deployment with known structural, behavioral, or security-relevant properties, after which Incubus runs deterministic runtime-adversity scenarios against the resulting system.
+
+For security testing, Homunculus can introduce a known source-level weakness with exact ground truth while Incubus determines whether that weakness is reachable, observable, containable, and recoverable at runtime. The pair can then benchmark analyzers, tests, observability, security controls, and review agents against the known defect and its real operational consequence.
 
 ## Relationship to Warlock
 
@@ -150,7 +176,10 @@ Incubus is not intended to become:
 - a generic benchmark suite without failure injection;
 - a repository defect generator;
 - an agent orchestrator;
-- an observability replacement; or
+- an observability replacement;
+- a general-purpose offensive-security framework;
+- an internet target-discovery or exploitation system;
+- a stealth, persistence, credential-theft, or data-exfiltration platform; or
 - a reason to recreate mature operating-system and network test facilities.
 
 ## Implementation direction

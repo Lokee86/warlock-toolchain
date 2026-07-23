@@ -40,9 +40,9 @@ Lexicon is an explicit shared dependency for tools that require language underst
 
 ### [Homunculus](docs/HOMUNCULUS.md)
 
-Homunculus now has its first standalone implementation slice: deterministic Go and Python `layered-service` specimens, content-hashed manifests, one build-preserving `api-bypasses-service` mutation, expected relationship and Pitlord diagnostic ground truth, and language-level invariant verification.
+Homunculus now performs real-repository architecture mutation in detached worktrees. Its first semantic operator consumes Lexicon facts to select real Go call chains, bypasses a forwarding layer with a generic syntax-aware rewrite, runs the full owning-module test suite, and records exact mutation evidence. Deterministic Go and Python specimen generation remains available for smoke testing.
 
-Next work should validate the generated specimens through Lexicon and Arcana, then use them to drive Pitlord's first direct architecture-boundary rule before broadening the profile or mutation vocabulary.
+Next work should feed successful mutations back through Lexicon and Pitlord, broaden architecture recipes and language adapters, and preserve development, validation, and holdout corpus discipline. Security-relevant source defects are a future profile when they can be expressed as narrow, verifiable transformations with the same isolation and ground-truth guarantees. Runtime exercise of those defects belongs to Incubus.
 
 ## Planned
 
@@ -56,9 +56,11 @@ Cantrip will provide portable, versioned, and testable skills for agents and aut
 
 ### [Incubus](docs/INCUBUS.md)
 
-Incubus will provide deterministic runtime-adversity testing for live systems. It will coordinate declared network, process, dependency, resource, timing, storage, and event-stream disruptions, capture the resulting evidence, and evaluate explicit recovery or convergence assertions.
+Incubus will provide deterministic runtime-adversity and edge-case exploration for live systems. It will coordinate declared network, process, dependency, resource, timing, storage, event-stream, malformed-input, and unusual-sequencing conditions, capture the resulting evidence, and evaluate explicit behavior, failure, containment, recovery, or convergence assertions.
 
-Space Rocks will be the first concrete target. Initial work should focus on repeatable multiplayer and distributed-service failure scenarios rather than attempting to create a universal chaos platform. Incubus complements Homunculus: Homunculus creates or mutates controlled repository specimens, while Incubus subjects running systems to controlled hostile conditions.
+Space Rocks will be the first concrete target. Initial work should focus on repeatable multiplayer and distributed-service failure scenarios rather than attempting to create a universal chaos platform. Security will be one bounded adversity profile alongside reliability, networking, distributed systems, persistence, concurrency, and gameplay—not Incubus's defining identity.
+
+Incubus complements Homunculus: Homunculus creates controlled source defects or repository conditions with known ground truth, while Incubus discovers and exercises their runtime consequences under explicitly scoped conditions. Security-oriented runs must remain authorized, allowlisted, resource-bounded, auditable, and designed for isolated or deliberately enrolled targets.
 
 ### Ritual
 

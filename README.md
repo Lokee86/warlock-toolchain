@@ -14,8 +14,8 @@ Warlock is a repository intelligence and governance toolchain. It externalizes d
 | [Grimoire](https://github.com/Lokee86/grimoire) | Lightweight indexed retrieval and token-bounded repository context compilation | In development |
 | **Pitlord** | Polyglot architecture, dependency, and ownership enforcement | Planned |
 | **Cantrip** | Portable, versioned, and testable skills for agents and automation | Planned |
-| [**Homunculus**](docs/HOMUNCULUS.md) | Schema-driven functional repository specimens and deterministic defect injection | In development |
-| [**Incubus**](docs/INCUBUS.md) | Deterministic runtime adversity, disruption, and recovery testing | Planned |
+| [**Homunculus**](docs/HOMUNCULUS.md) | Deterministic source mutation and repository defects with known ground truth | In development |
+| [**Incubus**](docs/INCUBUS.md) | Deterministic runtime adversity, edge-case exploration, and recovery testing | Planned |
 | **Ritual** | Deterministic execution protocols for agent-assisted work | Planned |
 
 Each component remains independently useful. Independently useful does not mean dependency-free: shared capabilities such as language analysis may be explicit dependencies when duplicating them would create worse products. Together, the tools are intended to share repository facts, identities, relationships, and policy so humans and software agents can work from the same durable understanding of a codebase. [Warlock itself](docs/WARLOCK_RUNTIME.md) is also intended to become the shared runtime and supervisor for the toolchain's daemon swarm.
@@ -47,10 +47,10 @@ Ritual
     makes agent execution bounded and repeatable
 
 Homunculus
-    creates controlled repository specimens for testing the toolchain
+    creates controlled source defects and repository specimens with known ground truth
 
 Incubus
-    applies reproducible adversity to running systems
+    torments running systems with reproducible adversity to discover and exercise edge cases
 ```
 
 Grimoire's base retrieval engine does not require Arcana or Demon Docs; both are optional evidence providers. Every component remains independently runnable, while the planned Warlock runtime will provide shared watching, lifecycle, events, and IPC when multiple daemons are installed.
@@ -69,7 +69,7 @@ This is the intended integration direction, not a claim that every component or 
 
 ## Current status
 
-[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. [Grimoire](https://github.com/Lokee86/grimoire) is now also in development with an incremental lexical index, deterministic ranking, bounded whole-chunk selection, and inspectable context packages. [Lexicon](https://github.com/Lokee86/lexicon) is now in development as the shared owner of language adapters and normalized source facts. Ruby, Python, GDScript, Rust, and TypeScript adapters are beginning in parallel while the existing Go adapter remains temporarily in Arcana. Homunculus is now in development with deterministic Go and Python layered-service specimens, manifest-backed ground truth, one build-preserving architecture mutation, and invariant verification. Pitlord, Cantrip, Incubus, and Ritual currently describe planned product boundaries.
+[Demon Docs](https://github.com/Lokee86/demon-docs) is the first available Warlock component. [Arcana](https://github.com/Lokee86/arcana-graph) is under active development, beginning with language-independent graph storage and synthetic workload evaluation. [Grimoire](https://github.com/Lokee86/grimoire) is now also in development with an incremental lexical index, deterministic ranking, bounded whole-chunk selection, and inspectable context packages. [Lexicon](https://github.com/Lokee86/lexicon) is now in development as the shared owner of language adapters and normalized source facts. Ruby, Python, GDScript, Rust, and TypeScript adapters are beginning in parallel while the existing Go adapter remains temporarily in Arcana. Homunculus is now in development with real-repository architecture mutation, Lexicon-derived call-chain selection, detached-worktree isolation, manifest-backed ground truth, and full owning-module verification. Security-relevant source defects are a future mutation profile rather than a separate product identity. Incubus remains planned as a general runtime-adversity and edge-case exploration harness; security is one bounded application alongside reliability, networking, distributed systems, persistence, concurrency, and gameplay. Pitlord, Cantrip, and Ritual currently describe planned product boundaries.
 
 Warlock itself currently serves as the documentation and coordination repository. It owns the shared vision, terminology, integration direction, and cross-tool roadmap. It is also planned to become the shared daemon runtime and supervisor, while domain implementation remains in the independently useful component repositories.
 

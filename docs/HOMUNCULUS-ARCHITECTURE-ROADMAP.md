@@ -12,7 +12,7 @@ Candidate selection may be explicit or seeded-random from the adapter-approved s
 
 ## Mutation families
 
-- single and partial layer/boundary bypasses — implemented for conservative Go, Python, and GDScript forwarding wrappers;
+- single and partial layer/boundary bypasses — implemented for conservative Go, Python, GDScript, and JavaScript/TypeScript forwarding wrappers;
 - generated forwarding packages for configurable call and dependency depth — next;
 - relocation of low-coupling functions into architecturally incorrect packages;
 - responsibility duplication with only some callers redirected;
